@@ -58,11 +58,10 @@ const Login = () => {
   };
 
   const loginState = localStorage.getItem("isLogedIn");
-  if(loginState){
+  if((isLogedIn || loginState) && (loginState != "false")){
     return(
         <>
-        <API/>  
-        {/* <CampaignGallery /> */}
+        <CampaignGallery />
         </>
     )
   }
