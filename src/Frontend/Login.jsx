@@ -3,101 +3,123 @@ import API from "./API";
 import CampaignGallery from './CampaignGallery'
 
 const Login = () => {
-  const [adminUsers, setAdminUsers] = useState([]);
+    const [adminUsers, setAdminUsers] = useState([]);
 
-  // DB values
-  const [dbUsername, setDbUsername] = useState("");
-  const [dbPassword, setDbPassword] = useState("");
+    const [viewGuest, setViewGuest] = useState(false);
 
-  // Input values
-  const [username, setUsername] = useState("");
-  const [password, setUserPassword] = useState("");
+    // DB values
+    const [dbUsername, setDbUsername] = useState("");
+    const [dbPassword, setDbPassword] = useState("");
 
-  const [message, setMessage] = useState("");
+    // Input values
+    const [username, setUsername] = useState("");
+    const [password, setUserPassword] = useState("");
 
-//  login  
-  const [isLogedIn, setisLogedIn] = useState(false);
+    const [message, setMessage] = useState("");
 
-  const ADMIN_API_URL = import.meta.env.VITE_ADMIN_API_URL;
+    //  login  
+    const [isLogedIn, setisLogedIn] = useState(false);
 
-  // ================= FETCH ADMIN USERS =================
-  useEffect(() => {
-    fetchAdminUsers();
-  }, []);
+    // admin - guest
+    const [isUser, setisUser] = useState("guest");
 
-  const fetchAdminUsers = async () => {
-    try {
-      const response = await fetch(ADMIN_API_URL);
-      const data = await response.json();
+    const ADMIN_API_URL = import.meta.env.VITE_ADMIN_API_URL;
 
-      console.log(data);
+    // ================= FETCH ADMIN USERS =================
+    useEffect(() => {
+        fetchAdminUsers();
+    }, []);
 
-      setAdminUsers(data);
+    const fetchAdminUsers = async () => {
+        try {
+            const response = await fetch(ADMIN_API_URL);
+            const data = await response.json();
 
-      // taking first admin user
-      if (data.length > 0) {
-        setDbUsername(data[0].username);
-        setDbPassword(data[0].userpassword);
-      }
-    } catch (error) {
-      console.error("❌ Error fetching:", error);
+            console.log(data);
+
+            setAdminUsers(data);
+
+            // taking first admin user
+            if (data.length > 0) {
+                setDbUsername(data[0].username);
+                setDbPassword(data[0].userpassword);
+            }
+        } catch (error) {
+            console.error("❌ Error fetching:", error);
+        }
+    };
+
+    // ================= LOGIN =================
+    const handleLogin = () => {
+        if (username === dbUsername && password === dbPassword) {
+            setMessage("✅ User logged in");
+            setisLogedIn(true);
+            localStorage.setItem("isLogedIn", true)
+            setisUser("admin");
+        } else {
+            setMessage("❌ Invalid credentials");
+            setisLogedIn(false);
+            localStorage.setItem("isLogedIn", false)
+            setisUser("guest");
+        }
+    };
+
+    const handleGuest = () => {
+        setViewGuest(true);
+        localStorage.setItem("isGuestUser", true)
+
     }
-  };
-
-  // ================= LOGIN =================
-  const handleLogin = () => {
-    if (username === dbUsername && password === dbPassword) {
-      setMessage("✅ User logged in");
-        setisLogedIn(true);
-        localStorage.setItem("isLogedIn", true)
-    } else {
-      setMessage("❌ Invalid credentials");
-      setisLogedIn(false);
-      localStorage.setItem("isLogedIn", false)
+    const guestUser = localStorage.getItem("isGuestUser");
+    if (viewGuest || guestUser && (guestUser != "false")) {
+        return (<CampaignGallery />)
     }
-  };
 
-  const loginState = localStorage.getItem("isLogedIn");
-  if((isLogedIn || loginState) && (loginState != "false")){
-    return(
-        <>
-        <CampaignGallery />
-        </>
-    )
-  }
+    const loginState = localStorage.getItem("isLogedIn");
+    if ((isLogedIn || loginState) && (loginState != "false")) {
+        return (
+            <>
+                <CampaignGallery />
+            </>
+        )
+    }
 
-  return (
-    <div style={{ padding: "20px" }}>
-      <h2>Admin Login Only</h2>
 
-      <input
-        type="text"
-        placeholder="Enter Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
 
-      <br />
-      <br />
+    return (
+        <div style={{ padding: "20px" }}>
+            <h2>Admin Login Only</h2>
 
-      <input
-        type="password"
-        placeholder="Enter Password"
-        value={password}
-        onChange={(e) => setUserPassword(e.target.value)}
-      />
+            <input
+                type="text"
+                placeholder="Enter Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+            />
 
-      <br />
-      <br />
+            <br />
+            <br />
 
-      <button onClick={handleLogin}>Submit</button>
+            <input
+                type="password"
+                placeholder="Enter Password"
+                value={password}
+                onChange={(e) => setUserPassword(e.target.value)}
+            />
 
-      <br />
-      <br />
+            <br />
+            <br />
 
-      <p>{message}</p>
-    </div>
-  );
+            <button onClick={handleLogin}>Submit</button><br></br><br></br>
+
+
+            <button onClick={handleGuest}>View as a Guest</button>
+
+            <br />
+            <br />
+
+            <p>{message}</p>
+        </div>
+    );
 };
 
 export default Login;
