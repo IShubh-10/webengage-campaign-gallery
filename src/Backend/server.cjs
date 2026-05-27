@@ -57,16 +57,16 @@ app.get('/api/admin_credentials', (req, res) => {
 
 // POST campaign
 app.post('/api/campaigns', (req, res) => {
-    const { title, type, tags, asanaLink, code } = req.body;
+    const { title, type, tags, asanaLink, code, imageUrl } = req.body;
 
     const tagString = Array.isArray(tags) ? tags.join(', ') : tags;
 
     const sql = `
-        INSERT INTO campaigns (title, type, tags, asanaLink, code)
-        VALUES (?, ?, ?, ?, ?)
+        INSERT INTO campaigns (title, type, tags, asanaLink, code, imageUrl)
+        VALUES (?, ?, ?, ?, ?, ?)
     `;
 
-    db.query(sql, [title, type, tagString, asanaLink, code], (err, result) => {
+    db.query(sql, [title, type, tagString, asanaLink, code, imageUrl], (err, result) => {
         if (err) return res.status(500).json({ error: err.message });
 
         res.status(201).json({
@@ -75,7 +75,8 @@ app.post('/api/campaigns', (req, res) => {
             type,
             tags: tagString,
             asanaLink,
-            code
+            code,
+            imageUrl
         });
     });
 });
@@ -83,17 +84,17 @@ app.post('/api/campaigns', (req, res) => {
 // PUT (Update)
 app.put('/api/campaigns/:id', (req, res) => {
     const { id } = req.params;
-    const { title, type, tags, asanaLink, code } = req.body;
+    const { title, type, tags, asanaLink, code, imageUrl} = req.body;
 
     const tagString = Array.isArray(tags) ? tags.join(', ') : tags;
 
     const sql = `
         UPDATE campaigns
-        SET title=?, type=?, tags=?, asanaLink=?, code=?
+        SET title=?, type=?, tags=?, asanaLink=?, code=?, imageUrl=?
         WHERE id=?
     `;
 
-    db.query(sql, [title, type, tagString, asanaLink, code, id], (err, result) => {
+    db.query(sql, [title, type, tagString, asanaLink, code, imageUrl, id], (err, result) => {
         if (err) return res.status(500).json({ error: err.message });
 
         if (result.affectedRows === 0) {
