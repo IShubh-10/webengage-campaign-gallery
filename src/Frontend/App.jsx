@@ -2,8 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import './App.css'
 import Login from './Login'
 import CampaignGallery from './CampaignGallery'
-import ImageUploader from './imageUploader'
-// import ImageUploader from './imageUploader'
+
 
 function App() {
   return (
@@ -11,7 +10,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/gallery" element={<CampaignGallery />} />
-        <Route path="/uploader" element={<ImageUploader />} />
         {/* Fallback route: redirects any unknown URL back to login */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
