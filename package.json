@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "start": "node Backend/server.cjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },
