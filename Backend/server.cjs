@@ -44,9 +44,9 @@ db.getConnection((err, conn) => {
 
 // ================= ROUTES =================
 
-// GET all campaigns
-app.get('/api/campaigns', (req, res) => {
-    db.query('SELECT * FROM campaigns ORDER BY id DESC', (err, results) => {
+// GET all campaign_hub
+app.get('/api/campaign_hub', (req, res) => {
+    db.query('SELECT * FROM campaign_hub ORDER BY id DESC', (err, results) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json(results);
     });
@@ -64,13 +64,13 @@ app.get('/api/admin_credentials', (req, res) => {
 });
 
 // POST campaign
-app.post('/api/campaigns', (req, res) => {
+app.post('/api/campaign_hub', (req, res) => {
     const { title, type, tags, asanaLink, code, imageUrl, cwcCode } = req.body;
 
     const tagString = Array.isArray(tags) ? tags.join(', ') : tags;
 
     const sql = `
-        INSERT INTO campaigns (title, type, tags, asanaLink, code, imageUrl, cwcCode)
+        INSERT INTO campaign_hub (title, type, tags, asanaLink, code, imageUrl, cwcCode)
         VALUES (?, ?, ?, ?, ?, ?, ?)
     `;
 
@@ -91,14 +91,14 @@ app.post('/api/campaigns', (req, res) => {
 });
 
 // PUT (Update)
-app.put('/api/campaigns/:id', (req, res) => {
+app.put('/api/campaign_hub/:id', (req, res) => {
     const { id } = req.params;
     const { title, type, tags, asanaLink, code, imageUrl, cwcCode} = req.body;
 
     const tagString = Array.isArray(tags) ? tags.join(', ') : tags;
 
     const sql = `
-        UPDATE campaigns
+        UPDATE campaign_hub
         SET title=?, type=?, tags=?, asanaLink=?, code=?, imageUrl=?, cwcCode=?
         WHERE id=?
     `;
@@ -115,10 +115,10 @@ app.put('/api/campaigns/:id', (req, res) => {
 });
 
 // DELETE
-app.delete('/api/campaigns/:id', (req, res) => {
+app.delete('/api/campaign_hub/:id', (req, res) => {
     const { id } = req.params;
 
-    db.query('DELETE FROM campaigns WHERE id = ?', [id], (err) => {
+    db.query('DELETE FROM campaign_hub WHERE id = ?', [id], (err) => {
         if (err) return res.status(500).json({ error: err.message });
 
         res.json({ message: 'Campaign deleted successfully' });
@@ -129,6 +129,6 @@ app.delete('/api/campaigns/:id', (req, res) => {
 const PORT = 5000;
 app.listen(PORT, () => {
     console.log(`🚀 Server running on http://localhost:${PORT}`);
-    console.log(`📡 API: http://localhost:${PORT}/api/campaigns`);
+    console.log(`📡 API: http://localhost:${PORT}/api/campaign_hub`);
     console.log(`📡 API: http://localhost:${PORT}/api/admin_credentials`);
 });
