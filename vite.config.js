@@ -3,12 +3,16 @@ import react, { reactCompilerPreset } from '@vitejs/plugin-react';
 import babel from '@rolldown/plugin-babel';
 
 export default defineConfig({
+  // 👇 Add this line
+  base: '/webengage-campaign-gallery/',
+
   plugins: [
     react(),
     babel({
       presets: [reactCompilerPreset()]
     })
   ],
+
   server: {
     host: '0.0.0.0',
     port: 5173,
