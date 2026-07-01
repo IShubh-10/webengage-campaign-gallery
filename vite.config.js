@@ -4,7 +4,7 @@ import babel from '@rolldown/plugin-babel';
 
 export default defineConfig({
   // 👇 Add this line
-  base: '/webengage-campaign-gallery/',
+  base: '/webengage-campaigns/',
 
   plugins: [
     react(),
