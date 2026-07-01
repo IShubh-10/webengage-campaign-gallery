@@ -1,20 +1,18 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
-import './App.css'
-import Login from './Login'
-import CampaignGallery from './CampaignGallery'
-
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import './App.css';
+import Login from './Login';
+import CampaignGallery from './CampaignGallery';
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter basename="/webengage-campaign-gallery">
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/gallery" element={<CampaignGallery />} />
-        {/* Fallback route: redirects any unknown URL back to login */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
-    </Router>
-  )
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
