@@ -217,7 +217,7 @@ const Login = () => {
                     height:58px;
                     border:none;
                     border-radius:14px;
-                    background:linear-gradient(135deg, #4d47b3, #583892);
+                    background:#5b21b6;
                     color:#fff;
                     font-size:16px;
                     font-weight:700;
@@ -261,9 +261,7 @@ const Login = () => {
 
                 .login-right{
                     width:54%;
-                    background:
-                        radial-gradient(circle at top right, rgba(124,102,255,0.18), transparent 30%),
-                        linear-gradient(135deg,#0f172a,#111827);
+                    background:#0d111d;
                     padding:60px;
                     display:flex;
                     align-items:center;
@@ -289,7 +287,6 @@ const Login = () => {
                     border:1px solid rgba(255,255,255,0.08);
                     color:#c7d2fe;
                     font-size:13px;
-                    font-weight:600;
                     margin-bottom:24px;
                 }
 
@@ -403,7 +400,7 @@ const Login = () => {
                     width:78%;
                     height:100%;
                     border-radius:999px;
-                    background:linear-gradient(90deg,#7C66FF,#A78BFA);
+                    background:#5b21b6;
                 }
 
                 /* ================= MOBILE ================= */
