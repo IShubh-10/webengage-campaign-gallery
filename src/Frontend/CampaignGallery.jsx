@@ -322,7 +322,9 @@ export default function App() {
         .btn { padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; display: flex; align-items: center; gap: 0.5rem; justify-content: center; transition: all 0.2s; }
         .btn-primary { background:white; color: var(--primary); border: 1px solid var(--primary);}
         .btn-primary:hover { background: var(--primary); color: white; }
-        .card-footer { padding: 1rem; background: #f8fafc; box-shadow: 0 -12px 20px rgba(93, 70, 177, 0.18); display: grid; gap: 6px; }
+        .card-footer { padding: 1rem 1.5rem 1rem 1rem; background: linear-gradient(to bottom, #ffffff, #f6f3ff85, #ede8ff4a, #e3dcff); box-shadow: none; display: flex; gap: 6px; }
+        button.btn.btn-ghost {background: transparent;}
+        button.btn.btn-ghost:hover {background: #5d46b1; color:#fff;}
         .admin-view { background: white; border-radius: var(--radius); border: 1px solid var(--border); display: flex; min-height: 700px; }
         .form-panel { width: 50%; padding: 2rem; border-right: 1px solid var(--border); overflow-y: auto; }
         .preview-panel { width: 50%; padding: 2rem; background: #f1f5f9; display: flex; flex-direction: column; }
@@ -453,15 +455,17 @@ export default function App() {
                         ) : null }
                       </div>
                       <h3 className="card-title">{c.title}</h3>
-                      <div style={{display: 'flex', gap: '5px', flexWrap: 'wrap', marginBottom: '10px'}}>
+                      <div style={{display: 'flex', gap: '5px', flexWrap: 'wrap', marginBottom: '10px', justifyContent:'space-between'}}>
                         {Array.isArray(c.tags) && c.tags.map(t => <span key={t} style={{fontSize: '0.7rem', color: '#64748b', background: '#f1f5f9', padding: '2px 8px', borderRadius: '4px'}}>#{t}</span>)}
+                        {/* <span style={{fontSize:'0.75rem', color:'#64748b'}}>{new Date(c.date || Date.now()).toLocaleDateString()}</span> */}
                       </div>
                       <div className="card-meta">
                         <span>{new Date(c.date || Date.now()).toLocaleDateString()}</span>
-                        {c.asanaLink && <a href={c.asanaLink} target="_blank" rel="noreferrer" style={{color: 'var(--primary)'}} title="Open Asana Task"><ExternalLink size={14}/></a>}
+                        {/* {c.asanaLink && <a href={c.asanaLink} target="_blank" rel="noreferrer" style={{color: 'var(--primary)'}} title="Open Asana Task"><ExternalLink size={14}/></a>} */}
                       </div>
                     </div>
-                    <div className="card-footer" style={{ gridTemplateColumns: userAdmin === "true" ? "repeat(3, 1fr)" : "repeat(2, 1fr)",}}>
+                    <div className="card-footer" style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
+                      <div style={{display:'flex'}}>
                       <button className="btn btn-ghost" style={{padding: '8px', fontSize: '0.75rem'}} onClick={() => { setActivePageIndex(0); setPreviewCampaign(c); }} title="Full Preview"><Eye size={14}/></button>
                       {userAdmin === "true" ? (
                       <button className="btn btn-ghost" style={{padding: '8px', fontSize: '0.75rem'}} onClick={() => startEdit(c)} title="Edit Campaign"><Edit3 size={14}/></button>
@@ -480,7 +484,12 @@ export default function App() {
                       >
                         {copyingId === c.id ? <Check size={14}/> : <Copy size={14}/>}
                       </button>
+                      </div>
+                      <div>
+                        {c.asanaLink && <a href={c.asanaLink} target="_blank" rel="noreferrer" style={{color: 'var(--primary)'}} title="Open Asana Task"><ExternalLink size={14}/></a>}
+                      </div>
                     </div>
+
                   </div>
                 ))}
               </div>
